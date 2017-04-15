@@ -29,7 +29,7 @@ public class NaiveBayesian {
                     else {
                         dataClass.wordCount = new ArrayList<Integer>();
                     }
-
+                    System.out.println("Directory Name:"+file.getName());
                     processData(dataClass, file);
                     calculatePrior();
                     classes.add(dataClass);
@@ -171,7 +171,7 @@ public class NaiveBayesian {
 
     private String findClass(ArrayList<String> words){
         float prob = 0;
-        float maxProb = -100000000;
+        float maxProb = -1000000000;
         String predictedClass = "";
         for(DataClass dataClass : classes){
             prob += Math.log(dataClass.prior);
@@ -180,10 +180,8 @@ public class NaiveBayesian {
                     continue;
                 }
                 if (!vocabulary.contains(word)) {
-                    prob += Math.log(1/(dataClass.totalWordCount+vocabulary.size()));
-                    //prob *= 1;
+                    prob *= 1;
                 }else {
-                    //prob *= dataClass.conditionalProbability.get(vocabulary.indexOf(word));
                     prob += Math.log(dataClass.conditionalProbability.get(vocabulary.indexOf(word)));
                 }
             }
